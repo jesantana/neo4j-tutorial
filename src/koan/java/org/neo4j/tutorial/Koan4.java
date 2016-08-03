@@ -25,12 +25,7 @@ public class Koan4
 
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE ({actor: 'David Tennant'})";
-
-        // SNIPPET_END
+        cql="CREATE (a {actor:'David Tennant'}) return a.actor";
 
         db.execute( cql );
 
@@ -46,14 +41,8 @@ public class Koan4
 
         db.execute( "CREATE ({actor: 'David Tennant'}) " );
 
-        String cql = "MATCH (a {actor: 'David Tennant'})\n";
-
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "SET a.original_name = 'David McDonald'";
-
-        // SNIPPET_END
+        String cql = 	"MATCH (a {actor: 'David Tennant'})\n";
+        cql += 			"SET a.original_name='David McDonald'";
 
         db.execute( cql );
 
@@ -72,12 +61,7 @@ public class Koan4
 
         String cql = "MATCH (a {actor: 'David Tennant'})\n";
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "SET a.original_name = 'Ronald McDonald'";
-
-        // SNIPPET_END
+        cql += "SET a.original_name='Ronald McDonald'";
 
         db.execute( cql );
 
@@ -96,12 +80,7 @@ public class Koan4
 
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE (a:Actor {actor: 'David Tennant'})";
-
-        // SNIPPET_END
+        cql ="CREATE (a:Actor {actor: 'David Tennant'})";
 
         db.execute( cql );
 
@@ -119,12 +98,7 @@ public class Koan4
 
         String cql = "MATCH (a {actor: 'David Tennant'})\n";
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "SET a:Scottish";
-
-        // SNIPPET_END
+        cql+="SET a:Scottish";
 
         db.execute( cql );
 
@@ -144,12 +118,7 @@ public class Koan4
 
         String cql = "MATCH (a:Actor {actor: 'David Tennant'})\n";
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "SET a:Actor:Male:Scottish";
-
-        // SNIPPET_END
+        cql+="SET a:Actor:Male:Scottish";
 
         db.execute( cql );
 

@@ -1,21 +1,21 @@
 package org.neo4j.tutorial;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.neo4j.helpers.collection.IteratorUtil.asIterable;
+import static org.neo4j.tutorial.matchers.ContainsOnlySpecificTitles.containsOnlyTitles;
+import static org.neo4j.tutorial.matchers.ContainsWikipediaEntries.containsExactlyWikipediaEntries;
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.IteratorUtil;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import static org.neo4j.helpers.collection.IteratorUtil.asIterable;
-import static org.neo4j.tutorial.matchers.ContainsOnlySpecificTitles.containsOnlyTitles;
-import static org.neo4j.tutorial.matchers.ContainsWikipediaEntries.containsExactlyWikipediaEntries;
 
 /**
  * In this Koan we learn the basics of the Cypher query language, focusing on the
@@ -29,17 +29,13 @@ public class Koan3
     static public DoctorWhoUniverseResource neo4jResource = new DoctorWhoUniverseResource();
 
     @Test
+    
     public void shouldFindAndReturnTheDoctor()
     {
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doctor:Character {character: 'Doctor'}) RETURN doctor";
-
-        // SNIPPET_END
+        cql="MATCH(doctor:Character {character: 'Doctor'})  RETURN doctor";
 
         Result result = db.execute( cql );
         Iterator<Node> containsTheDoctor = result.columnAs("doctor" );
@@ -57,13 +53,7 @@ public class Koan3
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (episode:Episode) RETURN episode";
-
-
-        // SNIPPET_END
+        cql ="MATCH (episode:Episode) RETURN episode";
 
         Result result = db.execute( cql );
 
@@ -77,13 +67,7 @@ public class Koan3
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (cybermen:Species {species: 'Cyberman'})-[:APPEARED_IN]->(episode:Episode) " +
-                "RETURN episode";
-
-        // SNIPPET_END
+        cql="MATCH(episode:Episode)<-[:APPEARED_IN]-(specie:Species{species:'Cyberman'}) return episode";
 
         Result result = db.execute( cql );
 
@@ -116,18 +100,11 @@ public class Koan3
         String cql = null;
 
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (tennant:Actor)-[:APPEARED_IN]->(episode:Episode), " +
-                "(rose:Character)-[:APPEARED_IN]->(episode:Episode), " +
-                "(daleks:Species)-[:APPEARED_IN]->(episode:Episode) " +
-                "WHERE tennant.actor ='David Tennant' " +
-                "AND rose.character = 'Rose Tyler' " +
-                "AND daleks.species = 'Dalek' " +
-                "RETURN episode";
-
-        // SNIPPET_END
+        cql = "MATCH (episode:Episode) \n";
+        cql+= "MATCH (episode)<-[:APPEARED_IN]-(specie:Species{species:'Dalek'}) \n";
+        cql+= "MATCH (episode)<-[:APPEARED_IN]-(actor:Actor{actor:'David Tennant'}) \n";
+        cql+= "MATCH (episode)<-[:APPEARED_IN]-(char:Character{character:'Rose Tyler'}) \n";
+        cql+= "RETURN episode \n";
 
         Result result = db.execute( cql );
 
@@ -148,14 +125,9 @@ public class Koan3
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doctor:Character {character: 'Doctor'})<-[:COMPANION_OF]-(companion:Character) " +
-                "WHERE has(companion.wikipedia) " +
-                "RETURN companion.wikipedia";
-
-        // SNIPPET_END
+        cql = "MATCH (companion:Character)-[:COMPANION_OF]->(doctor:Character{character:'Doctor'}) \n";
+        cql+= "where has(companion.wikipedia) \n";
+        cql+= "RETURN companion.wikipedia \n";
 
         Result result = db.execute( cql );
         Iterator<String> iterator = result.columnAs("companion.wikipedia");
@@ -170,16 +142,12 @@ public class Koan3
     public void shouldFindIndividualCompanionsAndEnemiesOfTheDoctor()
     {
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
-        String cql = "";
+        
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "MATCH (doctor:Character {character: 'Doctor'})<-[:ENEMY_OF|COMPANION_OF]-(other) ";
-        cql += "WHERE has(other.character) ";
-        cql += "RETURN DISTINCT other.character";
-
-        // SNIPPET_END
+        String cql = "MATCH (doctor:Character{character:'Doctor'})"
+        +"MATCH (other:Character)-[:COMPANION_OF|ENEMY_OF]->(doctor)"
+        +"WHERE has(other.character)"
+        +"RETURN DISTINCT other.character";
 
         Result result = db.execute(cql);
 

@@ -26,12 +26,6 @@ public class Koan14
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH p=(e:Episode { episode: '1'})-[:NEXT*5..5]->(:Episode)\n" +
-                "RETURN extract( e in nodes(p) | e.title)  AS episodes\n";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -47,11 +41,6 @@ public class Koan14
                 "(endEp:Episode {title: 'The Armageddon Factor'})\n";
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "FOREACH (r in relationships(p) | SET r.story_arc = 'The Key to Time')";
-
-        // SNIPPET_END
 
         db.execute( cql );
 

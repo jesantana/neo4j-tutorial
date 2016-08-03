@@ -36,14 +36,6 @@ public class Koan6
         // Hint: use 'c' for character column name and 't' for thing column name
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (c:Character)\n" +
-                "OPTIONAL MATCH (c)-[:OWNS]->(t:Thing)" +
-                "RETURN c.character, t.thing";
-
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -65,15 +57,6 @@ public class Koan6
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (a)\n" +
-                "OPTIONAL MATCH (a)-[r]->()\n" +
-                "SET a.visited = true \n" +
-                "SET r.visited = true \n";
-
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 

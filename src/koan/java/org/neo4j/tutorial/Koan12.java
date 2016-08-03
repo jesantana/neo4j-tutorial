@@ -48,11 +48,6 @@ public class Koan12
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE INDEX ON :Species(species) ";
-
-        // SNIPPET_END
 
         db.execute( cql );
 
@@ -66,11 +61,6 @@ public class Koan12
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "DROP INDEX ON :Species(species) ";
-
-        // SNIPPET_END
 
         db.execute( cql );
 

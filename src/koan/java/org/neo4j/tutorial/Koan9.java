@@ -29,14 +29,6 @@ public class Koan9
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (daleks:Species {species: \"Dalek\"})-[:APPEARED_IN]->(episode:Episode)<-[:USED_IN]-(:Props)" +
-                "<-[:MEMBER_OF]-(:Prop)-[:COMPOSED_OF]->(part:Part)-[:ORIGINAL_PROP]->(originalprop:Prop)" +
-                System.lineSeparator() +
-                "RETURN originalprop.prop, part.part, count(episode) ORDER BY count(episode) DESC LIMIT 1";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 

@@ -38,19 +38,6 @@ public class LegacyAutoIndexesFormerlyKoan04
         AutoIndexer<Node> charactersAutoIndex = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = database.beginTx() )
-        {
-            charactersAutoIndex = database
-                    .index()
-                    .getNodeAutoIndexer();
-            charactersAutoIndex.startAutoIndexingProperty( "character" );
-            charactersAutoIndex.setEnabled( true );
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try ( Transaction tx = database.beginTx() )
         {

@@ -31,13 +31,6 @@ public class Koan15
         String cql = "MATCH (c:Character)-[:COMPANION_OF]->(:Character {character: 'Doctor'})\n";
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "WITH c\n" +
-                "ORDER BY c.character\n" +
-                "RETURN collect(c.character) AS characters\n";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -59,13 +52,6 @@ public class Koan15
                 "-[:COMPANION_OF]->(:Character {character: 'Doctor'})\n";
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql += "WITH companion, count(ep) AS numberOfEpisodes\n" +
-                "WHERE numberOfEpisodes > 20\n" +
-                "RETURN companion.character AS companions";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -84,16 +70,6 @@ public class Koan15
         // Hint: think about the structure of the first and last doctors
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doc:Character {character:'Doctor'})<-[:PLAYED]-(first:Actor)-[:REGENERATED_TO]->(),\n" +
-                "(doc)<-[:PLAYED]-(last:Actor)<-[:REGENERATED_TO]-() \n" +
-                "WHERE not((first)<-[:REGENERATED_TO]-()) AND not(last-[:REGENERATED_TO]->())\n" +
-                "WITH first,last\n" +
-                "MATCH path = (first)-[:REGENERATED_TO*]->(last)\n" +
-                "RETURN LENGTH(path) as regenerations";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 

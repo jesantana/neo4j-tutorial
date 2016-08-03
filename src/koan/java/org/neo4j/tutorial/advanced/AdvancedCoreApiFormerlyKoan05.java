@@ -49,20 +49,6 @@ public class AdvancedCoreApiFormerlyKoan05
             int numberOfRegenerations = 0;
 
             // YOUR CODE GOES HERE
-            // SNIPPET_START
-
-
-            for ( Relationship relationship : doctor.getRelationships( INCOMING,
-                    DoctorWhoRelationships.PLAYED ) )
-            {
-                if ( relationship.getStartNode().hasRelationship( INCOMING,
-                        DoctorWhoRelationships.REGENERATED_TO ) )
-                {
-                    numberOfRegenerations++;
-                }
-            }
-
-            // SNIPPET_END
 
             assertEquals( 12, numberOfRegenerations );
             tx.success();
@@ -80,33 +66,6 @@ public class AdvancedCoreApiFormerlyKoan05
         {
 
             // YOUR CODE GOES HERE
-            // SNIPPET_START
-
-            Node human = database.findNode( SPECIES, "species", "Human" );
-
-
-            for ( Relationship rel : neo4jResource.theDoctor()
-                    .getRelationships( INCOMING,
-                            DoctorWhoRelationships.COMPANION_OF ) )
-            {
-                Node companionNode = rel.getStartNode();
-
-                if ( companionNode.hasRelationship( OUTGOING, DoctorWhoRelationships.IS_A ) )
-                {
-                    for ( Relationship companionNodeRelationship : companionNode.getRelationships(
-                            DoctorWhoRelationships.IS_A, OUTGOING ) )
-                    {
-                        Node endNode = companionNodeRelationship.getEndNode();
-
-                        if ( endNode.equals( human ) )
-                        {
-                            humanCompanions.add( companionNode );
-                        }
-                    }
-                }
-            }
-
-            // SNIPPET_END
 
             int numberOfKnownHumanCompanions = 40;
             assertEquals( numberOfKnownHumanCompanions, humanCompanions.size() );
@@ -125,25 +84,6 @@ public class AdvancedCoreApiFormerlyKoan05
             HashSet<Node> episodesWhereRoseFightsTheDaleks = new HashSet<>();
 
             // YOUR CODE GOES HERE
-            // SNIPPET_START
-
-            Node roseTyler = database.findNode(CHARACTER, "character", "Rose Tyler");
-            Node daleks = database.findNode( SPECIES, "species", "Dalek" );
-
-
-            for ( Relationship roseAppearedIn : roseTyler.getRelationships( OUTGOING, APPEARED_IN ) )
-            {
-                for ( Relationship appearedInEpisode : roseAppearedIn.getEndNode().getRelationships( INCOMING,
-                        APPEARED_IN ) )
-                {
-                    if ( appearedInEpisode.getStartNode().equals( daleks ) )
-                    {
-                        episodesWhereRoseFightsTheDaleks.add( appearedInEpisode.getEndNode() );
-                    }
-                }
-            }
-
-            // SNIPPET_END
 
             tx.success();
             assertThat( episodesWhereRoseFightsTheDaleks,

@@ -25,12 +25,7 @@ public class Koan2
         GraphDatabaseService graphDatabaseService = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE n";
-
-        // SNIPPET_END
+        cql="CREATE (n)";
 
         graphDatabaseService.execute(cql);
 
@@ -45,12 +40,7 @@ public class Koan2
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE (n { firstname : 'Tom', lastname : 'Baker' })";
-
-        // SNIPPET_END
+        cql="CREATE (n:Person{firstname: 'Tom', lastname: 'Baker'})";
 
         db.execute(cql);
 
@@ -68,13 +58,9 @@ public class Koan2
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE (doctor { character : 'Doctor' }), (master { character : 'Master' }), " +
-                "(doctor)<-[r:ENEMY_OF]-(master) ";
-
-        // SNIPPET_END
+        cql="CREATE (a {character: 'Doctor'}) \n ";
+        cql+="CREATE (b {character: 'Master'}) \n ";
+        cql+="CREATE a<-[r:ENEMY_OF]-b  \n";
 
         db.execute(cql);
 

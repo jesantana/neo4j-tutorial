@@ -23,12 +23,6 @@ public class Koan11
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH path = shortestPath( (sarahJaneSmith:Character {character:'Sarah Jane Smith'})-[*..50]-(skaro:Planet {planet: 'Skaro'}) )" +
-                "RETURN length(path) as length";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 

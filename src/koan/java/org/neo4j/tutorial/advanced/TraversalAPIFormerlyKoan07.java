@@ -42,27 +42,6 @@ public class TraversalAPIFormerlyKoan07
             // YOUR CODE GOES HERE
             // Note: every doctor has participated in a regeneration, including the first and last Doctors
 
-            // SNIPPET_START
-
-            regeneratedActors = database.traversalDescription()
-                    .relationships( DoctorWhoRelationships.PLAYED, Direction.INCOMING )
-                    .breadthFirst()
-                    .evaluator( new Evaluator()
-                    {
-                        public Evaluation evaluate( Path path )
-                        {
-                            if ( path.endNode().hasRelationship( DoctorWhoRelationships.REGENERATED_TO ) )
-                            {
-                                return Evaluation.INCLUDE_AND_CONTINUE;
-                            }
-                            else
-                            {
-                                return Evaluation.EXCLUDE_AND_CONTINUE;
-                            }
-                        }
-                    } );
-
-            // SNIPPET_END
 
             assertThat( regeneratedActors.traverse( theDoctor ).nodes(), containsNumberOfNodes( 13 ) );
             tx.success();
@@ -81,37 +60,6 @@ public class TraversalAPIFormerlyKoan07
         {
 
             // YOUR CODE GOES HERE
-            // SNIPPET_START
-
-            firstDoctor = database.traversalDescription()
-                    .relationships( DoctorWhoRelationships.PLAYED, Direction.INCOMING )
-                    .depthFirst()
-                    .uniqueness( Uniqueness.NODE_GLOBAL )
-                    .evaluator( new Evaluator()
-                    {
-                        public Evaluation evaluate( Path path )
-                        {
-                            if ( path.endNode().hasRelationship( DoctorWhoRelationships.REGENERATED_TO,
-                                    Direction.INCOMING ) )
-                            {
-                                return Evaluation.EXCLUDE_AND_CONTINUE;
-                            }
-                            else if ( !path.endNode().hasRelationship( DoctorWhoRelationships.REGENERATED_TO,
-                                    Direction.OUTGOING ) )
-                            {
-                                // Catches Richard Hurndall who played the William
-                                // Hartnell's Doctor in The Five Doctors (William
-                                // Hartnell had died by then)
-                                return Evaluation.EXCLUDE_AND_CONTINUE;
-                            }
-                            else
-                            {
-                                return Evaluation.INCLUDE_AND_PRUNE;
-                            }
-                        }
-                    } );
-
-            // SNIPPET_END
 
             assertThat( firstDoctor.traverse( theDoctor ).nodes(), containsOnlyActors( "William Hartnell" ) );
             tx.success();

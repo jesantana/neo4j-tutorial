@@ -40,13 +40,6 @@ public class LegacyIndexesFormerlyKoan03
         try ( Transaction tx = neo4jResource.getGraphDatabaseService().beginTx() )
         {
             // YOUR CODE GOES HERE
-            // SNIPPET_START
-
-            characters = neo4jResource.getGraphDatabaseService()
-                    .index()
-                    .forNodes( "characters" );
-
-            // SNIPPET_END
 
             assertNotNull( characters );
             assertThat(
@@ -66,18 +59,6 @@ public class LegacyIndexesFormerlyKoan03
 
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction transaction = database.beginTx() )
-        {
-            database.index()
-                    .forNodes( "characters" )
-                    .add( abigailPettigrew, "character", abigailPettigrew.getProperty( "character" ) );
-            transaction.success();
-        }
-
-
-        // SNIPPET_END
 
         try ( Transaction transaction = database.beginTx() )
         {
@@ -103,18 +84,6 @@ public class LegacyIndexesFormerlyKoan03
         // Index name: 'species', index key: 'species'
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = database.beginTx() )
-        {
-            species = database
-                    .index()
-                    .forNodes( "species" )
-                    .query( "species", "S*n" );
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try ( Transaction tx = database.beginTx() )
         {
@@ -135,20 +104,6 @@ public class LegacyIndexesFormerlyKoan03
         Node cyberleader = retriveCyberleaderFromIndex( database );
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = database.beginTx() )
-        {
-
-            for ( Relationship rel : cyberleader.getRelationships() )
-            {
-                rel.delete();
-            }
-            cyberleader.delete();
-            tx.success();
-
-        }
-        // SNIPPET_END
 
         assertNull( "Cyberleader has not been deleted from the characters index.",
                 retriveCyberleaderFromIndex( database ) );

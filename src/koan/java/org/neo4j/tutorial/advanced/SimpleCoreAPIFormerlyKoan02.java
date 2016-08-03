@@ -44,16 +44,6 @@ public class SimpleCoreAPIFormerlyKoan02
         // tx.finish()
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-
-        try ( Transaction tx = db.beginTx() )
-        {
-            node = db.createNode();
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         assertTrue(new DatabaseHelper(db).nodeExistsInDatabase( node ) );
     }
@@ -65,17 +55,6 @@ public class SimpleCoreAPIFormerlyKoan02
         Node theDoctor = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = db.beginTx() )
-        {
-            theDoctor = db.createNode();
-            theDoctor.setProperty( "firstname", "William" );
-            theDoctor.setProperty( "lastname", "Hartnell" );
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try ( Transaction tx = db.beginTx() )
         {
@@ -102,24 +81,6 @@ public class SimpleCoreAPIFormerlyKoan02
         // e.g. DoctorWhoRelationships.COMPANION_OF
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = db.beginTx() )
-        {
-            theDoctor = db.createNode();
-            theDoctor.setProperty( "character", "Doctor" );
-
-            susan = db.createNode();
-            susan.setProperty( "firstname", "Susan" );
-            susan.setProperty( "lastname", "Campbell" );
-
-            companionRelationship = susan.createRelationshipTo( theDoctor,
-                    DoctorWhoRelationships.COMPANION_OF );
-
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try ( Transaction tx = db.beginTx() )
         {
@@ -140,25 +101,6 @@ public class SimpleCoreAPIFormerlyKoan02
         Node captainKirk = createPollutedDatabaseContainingStarTrekReferences();
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = db.beginTx() )
-        {
-
-            // This is the tricky part, you have to remove the active
-            // relationships before you can remove a node
-            Iterable<Relationship> relationships = captainKirk.getRelationships();
-            for ( Relationship r : relationships )
-            {
-                r.delete();
-            }
-
-            captainKirk.delete();
-
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try
         {
@@ -180,26 +122,6 @@ public class SimpleCoreAPIFormerlyKoan02
         Node susan = createInaccurateDatabaseWhereSusanIsEnemyOfTheDoctor();
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        try ( Transaction tx = db.beginTx() )
-        {
-            Iterable<Relationship> relationships = susan.getRelationships( DoctorWhoRelationships.ENEMY_OF,
-                    Direction.OUTGOING );
-            for ( Relationship r : relationships )
-            {
-                Node n = r.getEndNode();
-                if ( n.hasProperty( "character" ) && n.getProperty( "character" )
-                        .equals( "Doctor" ) )
-                {
-                    r.delete();
-                }
-            }
-
-            tx.success();
-        }
-
-        // SNIPPET_END
 
         try ( Transaction tx = db.beginTx() )
         {

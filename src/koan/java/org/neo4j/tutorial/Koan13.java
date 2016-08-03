@@ -40,11 +40,6 @@ public class Koan13
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "CREATE CONSTRAINT ON (a:Actor) ASSERT a.actor IS UNIQUE";
-
-        // SNIPPET_END
 
         db.execute( cql );
 

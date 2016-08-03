@@ -35,13 +35,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doctor:Character)<-[:PLAYED]-(actor:Actor) "
-                + "WHERE doctor.character = 'Doctor' "
-                + "RETURN count(actor) AS numberOfActorsWhoPlayedTheDoctor";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -57,12 +50,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doctor:Character {character: 'Doctor'})<-[:PLAYED]-()-[regen:REGENERATED_TO]->() " +
-                "RETURN min(regen.year) AS earliest, max(regen.year) AS latest";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -78,13 +65,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (freema:Actor {actor: 'Freema Agyeman'})-[:PLAYED]->()-[:APPEARED_IN]->(episode:Episode)" +
-                "<-[:APPEARED_IN]-(david:Actor {actor: 'David Tennant'}) " +
-                "RETURN min(episode.episode) as earliest";
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -98,14 +78,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (doctor:Character {character: 'Doctor'})<-[:PLAYED]-(actor:Actor)"
-                + "WHERE has(actor.salary)"
-                + "RETURN avg(actor.salary) AS cash";
-
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -119,16 +91,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (davison:Actor {actor: 'Peter Davison'})-[:APPEARED_IN]->(episode:Episode)<-[:APPEARED_IN]-" +
-                "(enemy)-[:ENEMY_OF]->(:Character {character: 'Doctor'})"
-                + "RETURN episode.episode, episode.title, collect(enemy.species) AS species, "
-                + "collect(enemy.character) AS characters "
-                + "ORDER BY episode.episode";
-
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
 
@@ -146,14 +108,6 @@ public class Koan7
         String cql = null;
 
         // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MATCH (rose:Character {character: 'Rose Tyler'})-[:APPEARED_IN]->(episode:Episode), " +
-                "(doctor:Character {character:'Doctor'})-[:ENEMY_OF]->(enemy:Species)-[:APPEARED_IN]->(episode:Episode) " +
-                "RETURN DISTINCT enemy.species AS enemySpecies";
-
-
-        // SNIPPET_END
 
         Result result = db.execute( cql );
         Iterator<String> enemySpecies = result.columnAs("enemySpecies");

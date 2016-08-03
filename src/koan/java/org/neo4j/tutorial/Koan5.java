@@ -33,17 +33,12 @@ public class Koan5
     {
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
-
-        // Hint: Amy Pond is definitely in the graph, and the actors may be too. How can MERGE help?
-
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MERGE (amy:Character {character: 'Amy Pond'})\n" +
-                "MERGE (amy)<-[:PLAYED]-(:Actor {actor: 'Karen Gillan'})\n" +
-                "MERGE (amy)<-[:PLAYED]-(:Actor {actor: 'Caitlin Blackwood'})";
-
-        // SNIPPET_END
+        
+        cql ="MATCH (a:Character {character: 'Amy Pond'})";
+        cql+="MERGE (k:Actor{actor:'Karen Gillan'})";
+        cql+="MERGE (c:Actor{actor:'Caitlin Blackwood'})";
+        cql+="MERGE (k)-[:PLAYED]->(a)";
+        cql+="MERGE (c)-[:PLAYED]->(a)";
 
         db.execute( cql );
 
@@ -59,15 +54,10 @@ public class Koan5
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MERGE (amy:Character {character: 'Amy Pond'})\n" +
-                "MERGE (rory:Character {character: 'Rory Williams'})\n" +
-                "MERGE (amy)<-[:LOVES]-(rory)\n" +
-                "MERGE (amy)-[:LOVES]->(rory)";
-
-        // SNIPPET_END
+        cql ="MATCH (a:Character {character: 'Amy Pond'}) ";
+        cql+="MATCH (r:Character {character: 'Rory Williams'}) ";
+        cql+="MERGE (a)-[:LOVES]->(r) ";
+        cql+="MERGE (r)-[:LOVES]->(a) ";
 
         db.execute( cql );
 
@@ -83,14 +73,9 @@ public class Koan5
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
-        // SNIPPET_START
-
-        cql = "MERGE (:Character {character: 'Amy Pond'})-[c:COMPANION_OF]->(:Character {character: 'Doctor'})" +
-                "ON MATCH SET c.start = 2010, c.end = 2013";
-
-
-        // SNIPPET_END
+        cql ="MATCH (:Character {character: 'Amy Pond'})-[c:COMPANION_OF]->(:Character {character: 'Doctor'}) ";
+        cql+="SET c.start=2010 ";
+        cql+="SET c.end=2013 ";
 
         db.execute( cql );
 
