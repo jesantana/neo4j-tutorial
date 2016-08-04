@@ -33,9 +33,9 @@ public class Koan6
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // Hint: use 'c' for character column name and 't' for thing column name
-
-        // YOUR CODE GOES HERE
+        cql = "MATCH (c:Character)";
+        cql+= "OPTIONAL MATCH (t:Thing)<-[:OWNS]-(c)";
+        cql+= "RETURN c.character,t.thing";
 
         Result result = db.execute( cql );
 
@@ -56,7 +56,10 @@ public class Koan6
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql="MATCH (n) ";
+        cql+="OPTIONAL MATCH (n)-[r]->() ";
+        cql+="SET r.visited=true ";
+        cql+="SET n.visited=true ";
 
         Result result = db.execute( cql );
 
