@@ -34,7 +34,8 @@ public class Koan7
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (a:Actor)-[:PLAYED]->(c:Character{character:'Doctor'})";
+        cql+= "RETURN count(a) AS numberOfActorsWhoPlayedTheDoctor";
 
         Result result = db.execute( cql );
 
@@ -49,7 +50,8 @@ public class Koan7
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (a1)-[r:REGENERATED_TO]->(a2)";
+        cql+= "RETURN max(r.year) AS latest, min(r.year) AS earliest";
 
         Result result = db.execute( cql );
 
@@ -63,8 +65,13 @@ public class Koan7
     {
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
-
-        // YOUR CODE GOES HERE
+ 
+        cql ="MATCH (freeman:Actor{actor:'Freema Agyeman'}) ";
+        cql+="MATCH (david:Actor{actor:'David Tennant'}) ";
+        cql+="MATCH (episode:Episode) ";
+        cql+="MATCH (freeman)-[:PLAYED]->()-[:APPEARED_IN]->(episode) ";
+        cql+="MATCH (david)-[:APPEARED_IN]->(episode) ";
+        cql+="RETURN min(episode.episode) as earliest";
 
         Result result = db.execute( cql );
 
@@ -77,7 +84,8 @@ public class Koan7
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql ="MATCH (d:Actor)-[:PLAYED]->(c:Character{character:'Doctor'})";
+        cql+="RETURN avg(d.salary) AS cash";
 
         Result result = db.execute( cql );
 
@@ -90,7 +98,11 @@ public class Koan7
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql =  "MATCH (davison:Actor {actor: 'Peter Davison'})-[:APPEARED_IN]->(episode:Episode)<-[:APPEARED_IN]-" +
+                "(enemy)-[:ENEMY_OF]->(:Character {character: 'Doctor'})"
+                + "RETURN episode.episode, episode.title, collect(enemy.species) AS species, "
+                + "collect(enemy.character) AS characters "
+                + "ORDER BY episode.episode";
 
         Result result = db.execute( cql );
 
@@ -107,8 +119,10 @@ public class Koan7
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
-
+        cql = "MATCH (rose:Character {character: 'Rose Tyler'})-[:APPEARED_IN]->(episode:Episode), " +
+                "(doctor:Character {character:'Doctor'})-[:ENEMY_OF]->(enemy:Species)-[:APPEARED_IN]->(episode:Episode) " +
+                "RETURN DISTINCT enemy.species AS enemySpecies";
+        
         Result result = db.execute( cql );
         Iterator<String> enemySpecies = result.columnAs("enemySpecies");
 
