@@ -22,7 +22,9 @@ public class Koan11
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (sarah:Character{character:'Sarah Jane Smith'}) ";
+        cql+= "MATCH (skaro:Planet{planet:'Skaro'}) ";
+        cql+= "RETURN length(shortestPath((sarah)-[*..50]-(skaro))) as length";
 
         Result result = db.execute( cql );
 

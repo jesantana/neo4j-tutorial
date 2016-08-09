@@ -29,7 +29,12 @@ public class Koan8
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (doctor:Character)<-[r:COMPANION_OF]-(companion:Character) " +
+                "WHERE doctor.character='Doctor'" +
+                "AND has(companion.firstname) AND companion.firstname='James' " +
+                "AND has(companion.initial) AND companion.initial='T' " +
+                "AND has(companion.lastname) AND companion.lastname='Kirk' " +
+                "DELETE r,companion";;
 
         db.execute( cql );
 
@@ -44,8 +49,8 @@ public class Koan8
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
-
+        cql = "MATCH (doctor:Character {character: 'Doctor'})<-[:PLAYED]-(actor:Actor) "+
+        	  " REMOVE actor.salary";
         // Just for now, while we're converting the builder code to Cypher
         db.execute( cql );
 
@@ -64,7 +69,7 @@ public class Koan8
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService(); 
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (n) OPTIONAL MATCH (n)-[r]-() Delete n,r";
 
         db.execute( cql );
 
