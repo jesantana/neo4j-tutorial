@@ -30,8 +30,8 @@ public class Koan15
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = "MATCH (c:Character)-[:COMPANION_OF]->(:Character {character: 'Doctor'})\n";
 
-        // YOUR CODE GOES HERE
-
+        cql += " WITH c ORDER BY c.character RETURN collect(c.character) AS characters ";
+ 
         Result result = db.execute( cql );
 
         assertThat( result, containsOrderedList( "Ace", "Adam Mitchell", "Adelaide Brooke", "Adric", "Amy Pond",
@@ -51,7 +51,7 @@ public class Koan15
         String cql = "MATCH (ep:Episode)<-[:APPEARED_IN]-(companion:Character)" +
                 "-[:COMPANION_OF]->(:Character {character: 'Doctor'})\n";
 
-        // YOUR CODE GOES HERE
+        cql += " with companion, count(ep) as numberOfEpisodes where numberOfEpisodes>20 return companion.character AS companions  ";
 
         Result result = db.execute( cql );
 
@@ -65,11 +65,12 @@ public class Koan15
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        /* Can't just count (actor)-[:PLAYED]->(doctor) relationships because of Richard Hurndall */
-
-        // Hint: think about the structure of the first and last doctors
-
-        // YOUR CODE GOES HERE
+        cql = "MATCH (doc:Character {character:'Doctor'})<-[:PLAYED]-(first:Actor)-[:REGENERATED_TO]->(),\n" +
+                "(doc)<-[:PLAYED]-(last:Actor)<-[:REGENERATED_TO]-() \n" +
+                "WHERE not((first)<-[:REGENERATED_TO]-()) AND not(last-[:REGENERATED_TO]->())\n" +
+                "WITH first,last\n" +
+                "MATCH path = (first)-[:REGENERATED_TO*]->(last)\n" +
+                "RETURN LENGTH(path) as regenerations";
 
         Result result = db.execute( cql );
 

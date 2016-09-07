@@ -47,7 +47,7 @@ public class Koan12
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "Create INDEX on :Species(species)";
 
         db.execute( cql );
 
@@ -60,7 +60,7 @@ public class Koan12
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "Drop INDEX on :Species(species)";
 
         db.execute( cql );
 

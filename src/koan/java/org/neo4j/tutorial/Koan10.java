@@ -20,9 +20,8 @@ public class Koan10
     public void shouldFindHowManyRegenerationsBetweenTomBakerAndChristopherEccleston() throws Exception
     {
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
-        String cql = null;
-
-        // YOUR CODE GOES HERE
+        String cql = "Match p=(a1:Actor{actor:'Tom Baker'})-[:REGENERATED_TO*]->(a2:Actor{actor:'Christopher Eccleston'})";
+        cql+="return LENGTH(p) as regenerations";
 
         Result result = db.execute(cql);
 
@@ -35,7 +34,10 @@ public class Koan10
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "MATCH (master:Character {character: 'Master'})-[:APPEARED_IN]->(first:Episode), storyArcs = (first:Episode)-[:NEXT*]->()" +
+                "WHERE ALL(ep in nodes(storyArcs) WHERE master-[:APPEARED_IN]->ep)" +
+                "RETURN LENGTH(storyArcs) as noOfPathHops\n" +
+                "ORDER BY noOfPathHops DESC LIMIT 1";
 
         Result result = db.execute( cql );
 

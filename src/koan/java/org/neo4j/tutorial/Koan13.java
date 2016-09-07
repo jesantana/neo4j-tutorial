@@ -39,7 +39,7 @@ public class Koan13
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql = "CREATE CONSTRAINT ON a:Actor ASSERT a.actor IS UNIQUE";
 
         db.execute( cql );
 

@@ -25,7 +25,8 @@ public class Koan14
         GraphDatabaseService db = neo4jResource.getGraphDatabaseService();
         String cql = null;
 
-        // YOUR CODE GOES HERE
+        cql ="MATCH p=(e:Episode { episode: '1'})-[:NEXT*5..5]->(:Episode) RETURN extract( e in nodes(p) | e.title)  AS episodes";
+
 
         Result result = db.execute( cql );
 
